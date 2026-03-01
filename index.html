@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>パン屋</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Zen+Kurenaido&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ===== CSSの統合 ===== */
+    
+    /* 既存のコード */
+    header {
+      background-image: url(images/header.jpg);
+      padding: 150px;
+      background-size: cover;
+    }
+
+    h1 {
+      color: white;
+      font-size: 80px;
+      font-family: 'lobster', cursive; /* Google FontsにLobsterがない場合は代替フォントが必要 */
+      text-align: center;
+    }
+
+    /* 以下、動作に必要な最低限のスタイル（必要に応じて調整してください） */
+    .buremenD, .londonD, .kesu, .kesuD {
+      display: none;
+    }
+
+    .selectBox {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .selectImg {
+      width: 100px;
+      cursor: pointer;
+    }
+
+    .headerText {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .fadeText {
+      animation: fadeIn 1s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .scroll-carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 15px;
+      padding: 20px;
+    }
+
+    .card, .buremenMenuCard, .londonMenuCard {
+      border: 1px solid #ccc;
+      padding: 10px;
+      min-width: 150px;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+
+    /* モーダル簡易スタイル */
+    .modal {
+      display: none;
+    }
+    .modal:target {
+      display: block;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+    }
+    .modal-content {
+      background: white;
+      margin: 10% auto;
+      padding: 20px;
+      width: 80%;
+      max-width: 500px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="selectBox">
+  <button type="button" onclick="london()">
+    <img src="images/londonRogo.png" class="londonImg selectImg" alt="London">
+  </button>
+  <button type="button" onclick="buremen()">
+    <img src="images/buremen.png" class="buremenImg selectImg" alt="Buremen">
+  </button>
+</div>
+
+<header>
+  <div id="modal-zoom" class="modal">
+    <div class="modal-content zoom" id="modalMenu">
+      <a href="#a" class="close" aria-label="閉じる">×</a>
+    </div>
+  </div>
+  <div class="headerBox">
+    <section class="kesu" id="sectionModal">
+      <a href="#modal-zoom">
+        <span class="headerS1"></span>
+        <span class="headerS2"></span>
+        [MENU]
+      </a>
+    </section>
+    <div class="headerText">
+      <p id="headerText">上から選択してください</p>
+    </div>
+  </div>
+</header>
+
+<div class="scImg scR" id="scImg">
+  <div class="scUpBox">
+    <div class="scUp">
+      <div class="kariImg"></div>
+    </div>
+  </div>
+  <div class="downBox kesuD" id="downBox">
+    <div class="scDown" id="scDown">
+      <h2>一条高校/附属中学に</h2>
+      <h2>パンと笑顔を届けています</h2>
+    </div>
+  </div>
+</div>
+
+<div class="buremen buremenD" id="buremenBox">
+  <div class="buremenMenuBox">
+    <h2>パン一覧</h2>
+    <p>販売しているパンの一覧です</p>
+    <div id="buremenMenu"></div>
+  </div>
+  <div class="buremenRBBox" id="buremenRanking">
+    <div class="buremenRankingBox">
+      <h2>人気パンランキング！</h2>
+      <p>みんなが大好きなパンを
