@@ -1,6 +1,6 @@
 /* ===== ヘッダーのスタイル ===== */
 header {
-  background-image: url(images/header.jpg);
+  background-image: url(header.jpg);
   padding: 150px;
   background-size: cover;
 }
